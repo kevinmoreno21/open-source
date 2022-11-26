@@ -18,7 +18,7 @@ public class ProductoRest {
     private IProductoNegocio productoNegocio;
     Logger logger = LoggerFactory.getLogger(ProductoRest.class);
 
-    @GetMapping("/productos")
+    @GetMapping("/products")
     public List<Producto> lista(){
         return productoNegocio.listado();
     }
@@ -31,7 +31,7 @@ public class ProductoRest {
                                                 descripcion){
         return productoNegocio.listadoProductosPorDescripcion(descripcion);
     }
-    @PostMapping("/producto")
+    @PostMapping("/products")
     public Producto registrar(@RequestBody Producto producto){
          Producto p;
          try {
@@ -42,7 +42,7 @@ public class ProductoRest {
          }
          return p;
     }
-    @GetMapping("producto/{codigo}")
+    @GetMapping("products/{codigo}")
     public Producto buscar(@PathVariable(value = "codigo") Long codigo){
         try {
             return productoNegocio.buscar(codigo);
@@ -51,7 +51,27 @@ public class ProductoRest {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No existe",e);
         }
     }
+    @PutMapping("/products")
+    public Producto actualizar(@RequestBody Producto producto){
+        Producto p;
+        try {
+            p = productoNegocio.actualizar(producto);
+        }catch (Exception e){
+            logger.error("Error en la actualizacion", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No se puede",e);
+        }
+        return p;
+    }
 
+    @DeleteMapping("products/{codigo}")
+    public void eliminar(@PathVariable(value = "codigo") Long codigo){
+        try {
+            productoNegocio.eliminar(codigo);
+        } catch (Exception e) {
+            logger.error("Error critico:",e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No existe",e);
+        }
+    }
 
 
 }

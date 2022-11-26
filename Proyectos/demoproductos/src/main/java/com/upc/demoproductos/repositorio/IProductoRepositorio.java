@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IProductoRepositorio extends JpaRepository<Producto,Long> {
     public List<Producto> findByDescripcionStartingWith(String prefix); //Spring Data
-    @Query("SELECT p FROM Producto p WHERE p.descripcion like %:prefijo%")
+    @Query("SELECT p FROM Producto p WHERE p.descripcion like %:prefijo% ")
     public List<Producto> obtenerReportePorDescripcion(@Param("prefijo") String prefijo);
     public List<Producto> findByPrecioIsLessThan(double precio);//e)
 

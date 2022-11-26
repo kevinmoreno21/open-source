@@ -35,6 +35,11 @@ public class ProductoNegocio implements IProductoNegocio{
     }
 
     @Override
+    public void eliminar(Long codigo) throws Exception {
+        iProductoRepositorio.deleteById(codigo);
+    }
+
+    @Override
     public double calcularIGV(Producto producto) {
         double igv = 0;
         if(producto!=null){
